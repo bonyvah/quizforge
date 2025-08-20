@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QuizForge</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+      }
+
+      .container {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        padding: 40px;
+        max-width: 800px;
+        width: 100%;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .container::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #667eea, #764ba2);
+      }
+
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+      }
+
+      h1 {
+        color: #333;
+        font-size: 2.5rem;
+        font-weight: 700;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .language-switcher {
+        display: flex;
+        gap: 5px;
+        background: #f8f9fa;
+        border-radius: 8px;
+        padding: 5px;
+      }
+
+      .lang-btn {
+        background: transparent;
+        border: none;
+        padding: 8px 12px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 600;
+        color: #666;
+        transition: all 0.3s ease;
+      }
+
+      .lang-btn.active {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+      }
+
+      .lang-btn:hover:not(.active) {
+        background: #e9ecef;
+        color: #333;
+      }
+
+      .main-page {
+        display: block;
+      }
+
+      .quiz-page {
+        display: none;
+      }
+
+      .input-section {
+        margin-bottom: 30px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 10px;
+        font-weight: 600;
+        color: #555;
+        font-size: 1.1rem;
+      }
+
+      textarea {
+        width: 100%;
+        height: 200px;
+        padding: 15px;
+        border: 2px solid #e1e5e9;
+        border-radius: 12px;
+        font-family: "Courier New", monospace;
+        font-size: 14px;
+        resize: vertical;
+        transition: border-color 0.3s ease;
+        background: #f8f9fa;
+      }
+
+      textarea:focus {
+        outline: none;
+        border-color: #667eea;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+      }
+
+      .button {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        border: none;
+        padding: 15px 30px;
+        border-radius: 12px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+      }
+
+      .button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+      }
+
+      .button:active {
+        transform: translateY(0);
+      }
+
+      .create-quiz-btn {
+        display: block;
+        margin: 20px auto;
+        width: 200px;
+      }
+
+      .ai-instruction {
+        background: #f8f9fa;
+        border: 2px dashed #dee2e6;
+        border-radius: 12px;
+        padding: 20px;
+        margin-top: 30px;
+        position: relative;
+      }
+
+      .ai-instruction h3 {
+        color: #495057;
+        margin-bottom: 15px;
+        font-size: 1.2rem;
+      }
+
+      .ai-instruction-text {
+        background: white;
+        border: 1px solid #e9ecef;
+        border-radius: 8px;
+        padding: 15px;
+        font-family: "Courier New", monospace;
+        font-size: 14px;
+        line-height: 1.5;
+        color: #495057;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+      }
+
+      .ai-instruction-text:hover {
+        background: #f1f3f4;
+        border-color: #667eea;
+      }
+
+      .copy-hint {
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        background: #667eea;
+        color: white;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 12px;
+        opacity: 0.7;
+      }
+
+      .question-container {
+        margin-bottom: 30px;
+      }
+
+      .question-number {
+        color: #667eea;
+        font-weight: 600;
+        margin-bottom: 10px;
+        font-size: 1.1rem;
+      }
+
+      .question {
+        font-size: 1.3rem;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 25px;
+        line-height: 1.4;
+      }
+
+      .options {
+        display: grid;
+        gap: 15px;
+        margin-bottom: 25px;
+      }
+
+      .option {
+        background: #f8f9fa;
+        border: 2px solid #e9ecef;
+        border-radius: 12px;
+        padding: 15px 20px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 1.1rem;
+        position: relative;
+      }
+
+      .option:hover {
+        background: #e9ecef;
+        border-color: #667eea;
+      }
+
+      .option.selected {
+        background: #667eea;
+        color: white;
+        border-color: #667eea;
+      }
+
+      .option.correct {
+        background: #28a745;
+        color: white;
+        border-color: #28a745;
+      }
+
+      .option.incorrect {
+        background: #dc3545;
+        color: white;
+        border-color: #dc3545;
+      }
+
+      .option.disabled {
+        cursor: not-allowed;
+        opacity: 0.7;
+      }
+
+      .feedback {
+        margin: 20px 0;
+        padding: 15px;
+        border-radius: 12px;
+        font-weight: 600;
+        display: none;
+      }
+
+      .feedback.correct {
+        background: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+      }
+
+      .feedback.incorrect {
+        background: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+      }
+
+      .explanation {
+        margin-top: 10px;
+        font-weight: normal;
+        font-style: italic;
+      }
+
+      .next-btn {
+        display: none;
+        margin: 20px auto;
+        width: 150px;
+      }
+
+      .progress {
+        background: #e9ecef;
+        border-radius: 10px;
+        height: 8px;
+        margin-bottom: 30px;
+        overflow: hidden;
+      }
+
+      .progress-bar {
+        background: linear-gradient(90deg, #667eea, #764ba2);
+        height: 100%;
+        transition: width 0.3s ease;
+        border-radius: 10px;
+      }
+
+      .stats {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+        font-weight: 600;
+        color: #666;
+      }
+
+      .back-btn {
+        background: #6c757d;
+        margin-right: 10px;
+        width: 120px;
+      }
+
+      .error {
+        background: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+        border-radius: 8px;
+        padding: 15px;
+        margin: 15px 0;
+        display: none;
+      }
+
+      .success-message {
+        text-align: center;
+        padding: 40px;
+        color: #28a745;
+        font-size: 1.3rem;
+        font-weight: 600;
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          padding: 20px;
+          margin: 10px;
+        }
+
+        .header {
+          flex-direction: column;
+          gap: 20px;
+          align-items: center;
+        }
+
+        h1 {
+          font-size: 2rem;
+        }
+
+        .question {
+          font-size: 1.2rem;
+        }
+
+        .option {
+          padding: 12px 15px;
+          font-size: 1rem;
+        }
+
+        .language-switcher {
+          order: -1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>🔥 <span data-translate="title">QuizForge</span></h1>
+        <div class="language-switcher">
+          <button class="lang-btn active" onclick="switchLanguage('en')">
+            EN
+          </button>
+          <button class="lang-btn" onclick="switchLanguage('ru')">RU</button>
+          <button class="lang-btn" onclick="switchLanguage('ky')">KY</button>
+        </div>
+      </div>
+
+      <!-- Main Page -->
+      <div id="mainPage" class="main-page">
+        <div class="input-section">
+          <label for="jsonInput" data-translate="enterQuizJson"
+            >Enter Quiz JSON:</label
+          >
+          <textarea
+            id="jsonInput"
+            data-translate-placeholder="jsonPlaceholder"
+          ></textarea>
+        </div>
+
+        <div class="error" id="errorMessage"></div>
+
+        <button
+          class="button create-quiz-btn"
+          onclick="createQuiz()"
+          data-translate="createQuiz"
+        >
+          Create Quiz
+        </button>
+
+        <div class="ai-instruction">
+          <h3 data-translate="aiInstructionTitle">
+            📝 AI Instruction (Click to Copy)
+          </h3>
+          <div
+            class="ai-instruction-text"
+            onclick="copyToClipboard()"
+            id="aiInstruction"
+          >
+            <div class="copy-hint" data-translate="clickToCopy">
+              Click to copy
+            </div>
+            <span data-translate="aiInstructionText"
+              >Generate me quiz in json format like this: [{ "question": "What
+              is 2 + 2?", "options": ["3", "2", "5", "4"], "correctAnswerIndex":
+              3, "explanation": "2 + 2 equals 4 because it's basic arithmetic."
+              }, { "question": "Capital of Thailand", "options": ["Bishkek",
+              "Bangkok", "Baku", "Dushanbe"], "correctAnswerIndex": 1 }] on
+              topic</span
+            >
+          </div>
+        </div>
+      </div>
+
+      <!-- Quiz Page -->
+      <div id="quizPage" class="quiz-page">
+        <div class="stats">
+          <span id="questionCounter">Question 1 of 10</span>
+          <span id="mistakeCounter" data-translate="mistakes">Mistakes: 0</span>
+        </div>
+
+        <div class="progress">
+          <div class="progress-bar" id="progressBar"></div>
+        </div>
+
+        <div class="question-container">
+          <div
+            class="question-number"
+            id="questionNumber"
+            data-translate="question"
+          >
+            Question 1
+          </div>
+          <div class="question" id="questionText"></div>
+
+          <div class="options" id="optionsContainer"></div>
+
+          <div class="feedback" id="feedback">
+            <div id="feedbackText"></div>
+            <div class="explanation" id="explanation"></div>
+          </div>
+        </div>
+
+        <div style="text-align: center">
+          <button class="button back-btn" onclick="backToMain()">
+            ← <span data-translate="back">Back</span>
+          </button>
+          <button class="button next-btn" id="nextBtn" onclick="nextQuestion()">
+            <span data-translate="next">Next</span> →
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Language translations
+      const translations = {
+        en: {
+          title: "QuizForge",
+          enterQuizJson: "Enter Quiz JSON:",
+          jsonPlaceholder: `[{
+    "question": "What is 2 + 2?",
+    "options": ["3", "2", "5", "4"],
+    "correctAnswerIndex": 3,
+    "explanation": "2 + 2 equals 4 because it's basic arithmetic."
+},
+{
+    "question": "Capital of Thailand",
+    "options": ["Bishkek", "Bangkok", "Baku", "Dushanbe"],
+    "correctAnswerIndex": 1
+}]`,
+          createQuiz: "Create Quiz",
+          aiInstructionTitle: "📝 AI Instruction (Click to Copy)",
+          clickToCopy: "Click to copy",
+          aiInstructionText: `Generate me quiz in json format like this:
+[{
+    "question": "What is 2 + 2?",
+    "options": ["3", "2", "5", "4"],
+    "correctAnswerIndex": 3,
+    "explanation": "2 + 2 equals 4 because it's basic arithmetic."
+},
+{
+    "question": "Capital of Thailand",
+    "options": ["Bishkek", "Bangkok", "Baku", "Dushanbe"],
+    "correctAnswerIndex": 1
+}]
+on topic`,
+          question: "Question",
+          mistakes: "Mistakes:",
+          back: "Back",
+          next: "Next",
+          correct: "🎉 Correct!",
+          incorrect: "❌ Incorrect!",
+          quizCompleted: "🎊 Quiz Completed!",
+          greatJob: "Great job! You've answered all questions correctly.",
+          totalMistakes: "Total mistakes made:",
+          createNewQuiz: "Create New Quiz",
+          pleaseEnterJson: "Please enter quiz JSON data",
+          invalidArray: "JSON must be an array with at least one question",
+          invalidQuestion: "Invalid question format at index",
+          invalidJson: "Invalid JSON format. Please check your syntax.",
+          copied: "Copied!",
+        },
+        ru: {
+          title: "КвизФордж",
+          enterQuizJson: "Введите JSON викторины:",
+          jsonPlaceholder: `[{
+    "question": "Сколько будет 2 + 2?",
+    "options": ["3", "2", "5", "4"],
+    "correctAnswerIndex": 3,
+    "explanation": "2 + 2 равно 4, потому что это базовая арифметика."
+},
+{
+    "question": "Столица Таиланда",
+    "options": ["Бишкек", "Бангкок", "Баку", "Душанбе"],
+    "correctAnswerIndex": 1
+}]`,
+          createQuiz: "Создать викторину",
+          aiInstructionTitle:
+            "📝 Инструкция для ИИ (Нажмите, чтобы скопировать)",
+          clickToCopy: "Нажмите, чтобы скопировать",
+          aiInstructionText: `Создай мне викторину в формате json вот так:
+[{
+    "question": "Сколько будет 2 + 2?",
+    "options": ["3", "2", "5", "4"],
+    "correctAnswerIndex": 3,
+    "explanation": "2 + 2 равно 4, потому что это базовая арифметика."
+},
+{
+    "question": "Столица Таиланда",
+    "options": ["Бишкек", "Бангкок", "Баку", "Душанбе"],
+    "correctAnswerIndex": 1
+}]
+на тему`,
+          question: "Вопрос",
+          mistakes: "Ошибки:",
+          back: "Назад",
+          next: "Далее",
+          correct: "🎉 Правильно!",
+          incorrect: "❌ Неправильно!",
+          quizCompleted: "🎊 Викторина завершена!",
+          greatJob: "Отлично! Вы правильно ответили на все вопросы.",
+          totalMistakes: "Всего ошибок:",
+          createNewQuiz: "Создать новую викторину",
+          pleaseEnterJson: "Пожалуйста, введите JSON данные викторины",
+          invalidArray: "JSON должен быть массивом с хотя бы одним вопросом",
+          invalidQuestion: "Неверный формат вопроса в индексе",
+          invalidJson: "Неверный формат JSON. Проверьте синтаксис.",
+          copied: "Скопировано!",
+        },
+        ky: {
+          title: "КвизФордж",
+          enterQuizJson: "Викторинанын JSON маалыматын киргизиңиз:",
+          jsonPlaceholder: `[{
+    "question": "2 + 2 канча болот?",
+    "options": ["3", "2", "5", "4"],
+    "correctAnswerIndex": 3,
+    "explanation": "2 + 2 = 4, анткени бул негизги арифметика."
+},
+{
+    "question": "Тайланддын борбору",
+    "options": ["Бишкек", "Бангкок", "Баку", "Душанбе"],
+    "correctAnswerIndex": 1
+}]`,
+          createQuiz: "Викторина түзүү",
+          aiInstructionTitle: "📝 AI үчүн көрсөтмө (Көчүрүү үчүн басыңыз)",
+          clickToCopy: "Көчүрүү үчүн басыңыз",
+          aiInstructionText: `Мага ушундай json форматында викторина түзүп бериңиз:
+[{
+    "question": "2 + 2 канча болот?",
+    "options": ["3", "2", "5", "4"],
+    "correctAnswerIndex": 3,
+    "explanation": "2 + 2 = 4, анткени бул негизги арифметика."
+},
+{
+    "question": "Тайланддын борбору",
+    "options": ["Бишкек", "Бангкок", "Баку", "Душанбе"],
+    "correctAnswerIndex": 1
+}]
+тема: `,
+          question: "Суроо",
+          mistakes: "Каталар:",
+          back: "Артка",
+          next: "Кийинки",
+          correct: "🎉 Туура!",
+          incorrect: "❌ Туура эмес!",
+          quizCompleted: "🎊 Викторина аяктады!",
+          greatJob: "Сонун! Сиз бардык суроолорго туура жооп бердиңиз.",
+          totalMistakes: "Жалпы каталар:",
+          createNewQuiz: "Жаңы викторина түзүү",
+          pleaseEnterJson: "Викторинанын JSON маалыматын киргизиңиз",
+          invalidArray: "JSON кеминде бир суроо менен массив болушу керек",
+          invalidQuestion: "Суроонун форматы туура эмес",
+          invalidJson: "JSON форматы туура эмес. Синтаксисти текшериңиз.",
+          copied: "Көчүрүлдү!",
+        },
+      };
+
+      let currentLanguage = "en";
+      let quizData = [];
+      let currentQuestionIndex = 0;
+      let mistakeQuestions = [];
+      let totalMistakes = 0;
+      let selectedOption = null;
+      let isAnswered = false;
+
+      function switchLanguage(lang) {
+        currentLanguage = lang;
+
+        // Update active button
+        document
+          .querySelectorAll(".lang-btn")
+          .forEach((btn) => btn.classList.remove("active"));
+        event.target.classList.add("active");
+
+        // Update all translatable elements
+        document.querySelectorAll("[data-translate]").forEach((element) => {
+          const key = element.getAttribute("data-translate");
+          if (translations[lang][key]) {
+            element.textContent = translations[lang][key];
+          }
+        });
+
+        // Update placeholder
+        const textarea = document.getElementById("jsonInput");
+        if (translations[lang].jsonPlaceholder) {
+          textarea.placeholder = translations[lang].jsonPlaceholder;
+        }
+
+        // Update AI instruction text content
+        const aiInstructionSpan = document.querySelector(
+          '#aiInstruction span[data-translate="aiInstructionText"]'
+        );
+        if (aiInstructionSpan && translations[lang].aiInstructionText) {
+          aiInstructionSpan.textContent = translations[lang].aiInstructionText;
+        }
+      }
+
+      function showError(messageKey) {
+        const errorDiv = document.getElementById("errorMessage");
+        errorDiv.textContent =
+          translations[currentLanguage][messageKey] || messageKey;
+        errorDiv.style.display = "block";
+        setTimeout(() => {
+          errorDiv.style.display = "none";
+        }, 5000);
+      }
+
+      function createQuiz() {
+        const jsonInput = document.getElementById("jsonInput").value.trim();
+
+        if (!jsonInput) {
+          showError("pleaseEnterJson");
+          return;
+        }
+
+        try {
+          const data = JSON.parse(jsonInput);
+
+          if (!Array.isArray(data) || data.length === 0) {
+            showError("invalidArray");
+            return;
+          }
+
+          // Validate each question
+          for (let i = 0; i < data.length; i++) {
+            const q = data[i];
+            if (
+              !q.question ||
+              !Array.isArray(q.options) ||
+              q.options.length < 2 ||
+              typeof q.correctAnswerIndex !== "number" ||
+              q.correctAnswerIndex < 0 ||
+              q.correctAnswerIndex >= q.options.length
+            ) {
+              showError("invalidQuestion" + " " + i);
+              return;
+            }
+          }
+
+          quizData = data;
+          currentQuestionIndex = 0;
+          mistakeQuestions = [];
+          totalMistakes = 0;
+          startQuiz();
+        } catch (error) {
+          showError("invalidJson");
+        }
+      }
+
+      function startQuiz() {
+        document.getElementById("mainPage").style.display = "none";
+        document.getElementById("quizPage").style.display = "block";
+        displayQuestion();
+      }
+
+      function displayQuestion() {
+        const question = quizData[currentQuestionIndex];
+        selectedOption = null;
+        isAnswered = false;
+
+        // Update question counter and progress
+        const totalQuestions = quizData.length + mistakeQuestions.length;
+        const currentPosition = currentQuestionIndex + 1;
+        document.getElementById("questionCounter").textContent = `${
+          translations[currentLanguage].question
+        } ${currentPosition} ${
+          translations[currentLanguage].question === "Question"
+            ? "of"
+            : translations[currentLanguage].question === "Вопрос"
+            ? "из"
+            : "дан"
+        } ${totalQuestions}`;
+        document.getElementById(
+          "mistakeCounter"
+        ).textContent = `${translations[currentLanguage].mistakes} ${totalMistakes}`;
+
+        const progress = (currentQuestionIndex / quizData.length) * 100;
+        document.getElementById("progressBar").style.width = progress + "%";
+
+        // Display question
+        document.getElementById(
+          "questionNumber"
+        ).textContent = `${translations[currentLanguage].question} ${currentPosition}`;
+        document.getElementById("questionText").textContent = question.question;
+
+        // Display options
+        const optionsContainer = document.getElementById("optionsContainer");
+        optionsContainer.innerHTML = "";
+
+        question.options.forEach((option, index) => {
+          const optionDiv = document.createElement("div");
+          optionDiv.className = "option";
+          optionDiv.textContent = option;
+          optionDiv.onclick = () => selectOption(index);
+          optionsContainer.appendChild(optionDiv);
+        });
+
+        // Hide feedback and next button
+        document.getElementById("feedback").style.display = "none";
+        document.getElementById("nextBtn").style.display = "none";
+      }
+
+      function selectOption(index) {
+        if (isAnswered) return;
+
+        selectedOption = index;
+        isAnswered = true;
+
+        const question = quizData[currentQuestionIndex];
+        const options = document.querySelectorAll(".option");
+        const feedback = document.getElementById("feedback");
+        const feedbackText = document.getElementById("feedbackText");
+        const explanation = document.getElementById("explanation");
+
+        // Disable all options
+        options.forEach((option) => option.classList.add("disabled"));
+
+        // Show correct answer
+        options[question.correctAnswerIndex].classList.add("correct");
+
+        if (index === question.correctAnswerIndex) {
+          // Correct answer
+          feedbackText.textContent = translations[currentLanguage].correct;
+          feedback.className = "feedback correct";
+        } else {
+          // Wrong answer
+          options[index].classList.add("incorrect");
+          feedbackText.textContent = translations[currentLanguage].incorrect;
+          feedback.className = "feedback incorrect";
+
+          // Add to mistake questions if not already there
+          if (
+            !mistakeQuestions.some(
+              (q) => q.originalIndex === currentQuestionIndex
+            )
+          ) {
+            mistakeQuestions.push({
+              ...question,
+              originalIndex: currentQuestionIndex,
+            });
+          }
+          totalMistakes++;
+        }
+
+        // Show explanation if available
+        if (question.explanation) {
+          explanation.textContent = question.explanation;
+          explanation.style.display = "block";
+        } else {
+          explanation.style.display = "none";
+        }
+
+        feedback.style.display = "block";
+        document.getElementById("nextBtn").style.display = "inline-block";
+      }
+
+      function nextQuestion() {
+        currentQuestionIndex++;
+
+        if (currentQuestionIndex >= quizData.length) {
+          // Check if there are mistake questions to retry
+          if (mistakeQuestions.length > 0) {
+            // Move mistake questions to main quiz data
+            quizData = mistakeQuestions;
+            mistakeQuestions = [];
+            currentQuestionIndex = 0;
+            displayQuestion();
+          } else {
+            // Quiz completed
+            showCompletion();
+          }
+        } else {
+          displayQuestion();
+        }
+      }
+
+      function showCompletion() {
+        const quizPage = document.getElementById("quizPage");
+        quizPage.innerHTML = `
+                <div class="success-message">
+                    <h2>${translations[currentLanguage].quizCompleted}</h2>
+                    <p>${translations[currentLanguage].greatJob}</p>
+                    <p>${translations[currentLanguage].totalMistakes} ${totalMistakes}</p>
+                    <button class="button" onclick="backToMain()" style="margin-top: 30px;">${translations[currentLanguage].createNewQuiz}</button>
+                </div>
+            `;
+      }
+
+      function backToMain() {
+        document.getElementById("mainPage").style.display = "block";
+        document.getElementById("quizPage").style.display = "none";
+
+        // Reset quiz page content in case it was modified
+        document.getElementById("quizPage").innerHTML = `
+                <div class="stats">
+                    <span id="questionCounter">Question 1 of 10</span>
+                    <span id="mistakeCounter" data-translate="mistakes">${translations[currentLanguage].mistakes} 0</span>
+                </div>
+                
+                <div class="progress">
+                    <div class="progress-bar" id="progressBar"></div>
+                </div>
+                
+                <div class="question-container">
+                    <div class="question-number" id="questionNumber" data-translate="question">${translations[currentLanguage].question} 1</div>
+                    <div class="question" id="questionText"></div>
+                    
+                    <div class="options" id="optionsContainer"></div>
+                    
+                    <div class="feedback" id="feedback">
+                        <div id="feedbackText"></div>
+                        <div class="explanation" id="explanation"></div>
+                    </div>
+                </div>
+                
+                <div style="text-align: center;">
+                    <button class="button back-btn" onclick="backToMain()">← <span data-translate="back">${translations[currentLanguage].back}</span></button>
+                    <button class="button next-btn" id="nextBtn" onclick="nextQuestion()"><span data-translate="next">${translations[currentLanguage].next}</span> →</button>
+                </div>
+            `;
+      }
+
+      function copyToClipboard() {
+        const aiInstructionSpan = document.querySelector(
+          '#aiInstruction span[data-translate="aiInstructionText"]'
+        );
+        const text = aiInstructionSpan
+          ? aiInstructionSpan.textContent
+          : translations[currentLanguage].aiInstructionText;
+
+        if (navigator.clipboard) {
+          navigator.clipboard.writeText(text).then(() => {
+            showCopySuccess();
+          });
+        } else {
+          // Fallback for older browsers
+          const textArea = document.createElement("textarea");
+          textArea.value = text;
+          document.body.appendChild(textArea);
+          textArea.select();
+          document.execCommand("copy");
+          document.body.removeChild(textArea);
+          showCopySuccess();
+        }
+      }
+
+      function showCopySuccess() {
+        const hint = document.querySelector(".copy-hint");
+        const originalText = hint.textContent;
+        hint.textContent = translations[currentLanguage].copied;
+        hint.style.background = "#28a745";
+
+        setTimeout(() => {
+          hint.textContent = translations[currentLanguage].clickToCopy;
+          hint.style.background = "#667eea";
+        }, 2000);
+      }
+
+      // Initialize with default language
+      document.addEventListener("DOMContentLoaded", function () {
+        switchLanguage("en");
+      });
+    </script>
+  </body>
+</html>
