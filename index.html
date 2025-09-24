@@ -195,8 +195,8 @@
         position: absolute;
         top: 10px;
         right: 15px;
-        background: #667eea;
-        color: white;
+        background: black;
+        color: rgb(255, 255, 255);
         padding: 4px 8px;
         border-radius: 4px;
         font-size: 12px;
@@ -338,6 +338,283 @@
         display: none;
       }
 
+      .navigation {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 30px;
+        background: #f8f9fa;
+        border-radius: 12px;
+        padding: 8px;
+      }
+
+      .nav-btn {
+        background: transparent;
+        border: none;
+        padding: 12px 20px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 600;
+        color: #666;
+        transition: all 0.3s ease;
+        flex: 1;
+      }
+
+      .nav-btn.active {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+      }
+
+      .nav-btn:hover:not(.active) {
+        background: #e9ecef;
+        color: #333;
+      }
+
+      .page {
+        display: none;
+      }
+
+      .page.active {
+        display: block;
+      }
+
+      .quiz-item {
+        background: #f8f9fa;
+        border: 2px solid #e9ecef;
+        border-radius: 12px;
+        padding: 15px;
+        margin-bottom: 15px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+      }
+
+      .quiz-item:hover {
+        background: #e9ecef;
+        border-color: #667eea;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
+      }
+
+      .quiz-preview {
+        font-family: "Courier New", monospace;
+        color: #666;
+        font-size: 14px;
+        margin-bottom: 10px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .quiz-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 12px;
+        color: #999;
+      }
+
+      .quiz-actions {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .star-btn {
+        background: transparent;
+        border: none;
+        font-size: 20px;
+        cursor: pointer;
+        padding: 5px;
+        border-radius: 4px;
+        transition: all 0.3s ease;
+        position: absolute;
+        top: 15px;
+        right: 15px;
+      }
+
+      .star-btn-inline {
+        background: #f8f9fa;
+        border: 2px solid #dee2e6;
+        font-size: 18px;
+        cursor: pointer;
+        padding: 8px 12px;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        position: relative;
+        min-width: 40px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+      }
+
+      .star-btn:hover,
+      .star-btn-inline:hover {
+        background: rgba(255, 215, 0, 0.15);
+        border-color: #ffd700;
+        transform: scale(1.05);
+      }
+
+      .star-btn.starred,
+      .star-btn-inline.starred {
+        color: #ffd700;
+        background: rgba(255, 215, 0, 0.1);
+        border-color: #ffd700;
+        text-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
+      }
+
+      .star-btn:not(.starred),
+      .star-btn-inline:not(.starred) {
+        color: #999;
+        background: #f8f9fa;
+        border-color: #dee2e6;
+      }
+
+      .star-btn-inline:not(.starred):hover {
+        color: #ffd700;
+        background: rgba(255, 215, 0, 0.05);
+      }
+
+      .empty-state {
+        text-align: center;
+        padding: 60px 20px;
+        color: #666;
+      }
+
+      .empty-state-icon {
+        font-size: 4rem;
+        margin-bottom: 20px;
+        opacity: 0.3;
+      }
+
+      .quiz-name {
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 5px;
+      }
+
+      .delete-btn {
+        background: #dc3545;
+        color: white;
+        border: 2px solid #dc3545;
+        padding: 8px 12px;
+        border-radius: 8px;
+        font-size: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        min-height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .delete-btn:hover {
+        background: #c82333;
+        border-color: #c82333;
+        transform: scale(1.05);
+      }
+
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+      }
+
+      .modal-content {
+        background-color: white;
+        margin: 15% auto;
+        padding: 30px;
+        border-radius: 12px;
+        width: 90%;
+        max-width: 400px;
+        text-align: center;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      }
+
+      .modal input {
+        width: 100%;
+        padding: 12px;
+        border: 2px solid #e9ecef;
+        border-radius: 8px;
+        font-size: 16px;
+        margin: 20px 0;
+      }
+
+      .modal input:focus {
+        outline: none;
+        border-color: #667eea;
+      }
+
+      .modal-buttons {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+      }
+
+      .modal-btn {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+      }
+
+      .modal-btn.primary {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+      }
+
+      .modal-btn.secondary {
+        background: #6c757d;
+        color: white;
+      }
+
+      .quiz-controls {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        text-align: center;
+      }
+
+      .main-controls {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+      }
+
+      .star-quiz-btn {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: #333;
+        border: none;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 8px rgba(255, 215, 0, 0.3);
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .star-quiz-btn:hover {
+        background: linear-gradient(135deg, #667eea 0%, #73e692 100%);
+        transform: scale(1.1);
+        box-shadow: 0 4px 12px rgba(255, 215, 0, 0.4);
+      }
+
       .success-message {
         text-align: center;
         padding: 40px;
@@ -374,6 +651,45 @@
         .language-switcher {
           order: -1;
         }
+
+        .navigation {
+          flex-direction: column;
+          gap: 5px;
+        }
+
+        .nav-btn {
+          padding: 10px 15px;
+        }
+
+        .quiz-item {
+          padding: 12px;
+        }
+
+        .modal-content {
+          margin: 25% auto;
+          padding: 20px;
+          width: 95%;
+        }
+
+        .quiz-controls {
+          flex-direction: column;
+          gap: 15px;
+        }
+
+        .main-controls {
+          gap: 15px;
+        }
+
+        .quiz-actions {
+          gap: 8px;
+        }
+
+        .star-btn-inline,
+        .delete-btn {
+          font-size: 14px;
+          padding: 6px 10px;
+          min-height: 32px;
+        }
       }
     </style>
   </head>
@@ -382,62 +698,64 @@
       <div class="header">
         <h1>🔥 <span data-translate="title">QuizForge</span></h1>
         <div class="language-switcher">
-          <button class="lang-btn active" onclick="switchLanguage('en')">
-            EN
-          </button>
+          <button class="lang-btn active" onclick="switchLanguage('en')">EN</button>
           <button class="lang-btn" onclick="switchLanguage('ru')">RU</button>
           <button class="lang-btn" onclick="switchLanguage('ky')">KY</button>
         </div>
       </div>
 
+      <!-- Navigation -->
+      <div class="navigation" id="navigation">
+        <button class="nav-btn active" onclick="showPage('main')" data-translate="home">Home</button>
+        <button class="nav-btn" onclick="showPage('history')" data-translate="history">History</button>
+        <button class="nav-btn" onclick="showPage('starred')" data-translate="starred">Starred</button>
+      </div>
+
       <!-- Main Page -->
-      <div id="mainPage" class="main-page">
+      <div id="mainPage" class="page active">
         <div class="input-section">
-          <label for="jsonInput" data-translate="enterQuizJson"
-            >Enter Quiz JSON:</label
-          >
-          <textarea
-            id="jsonInput"
-            data-translate-placeholder="jsonPlaceholder"
-          ></textarea>
+          <label for="jsonInput" data-translate="enterQuizJson">Enter Quiz JSON:</label>
+          <textarea id="jsonInput" data-translate-placeholder="jsonPlaceholder"></textarea>
         </div>
 
         <div class="error" id="errorMessage"></div>
 
-        <button
-          class="button create-quiz-btn"
-          onclick="createQuiz()"
-          data-translate="createQuiz"
-        >
-          Create Quiz
-        </button>
+        <button class="button create-quiz-btn" onclick="createQuiz()" data-translate="createQuiz">Create Quiz</button>
 
         <div class="ai-instruction">
-          <h3 data-translate="aiInstructionTitle">
-            📝 AI Instruction (Click to Copy)
-          </h3>
-          <div
-            class="ai-instruction-text"
-            onclick="copyToClipboard()"
-            id="aiInstruction"
-          >
-            <div class="copy-hint" data-translate="clickToCopy">
-              Click to copy
-            </div>
+          <h3 data-translate="aiInstructionTitle">📝 AI Instruction (Click to Copy)</h3>
+          <div class="ai-instruction-text" onclick="copyToClipboard()" id="aiInstruction">
+            <div class="copy-hint" data-translate="clickToCopy">Click to copy</div>
             <span data-translate="aiInstructionText"
-              >Generate me quiz in json format like this: [{ "question": "What
-              is 2 + 2?", "options": ["3", "2", "5", "4"], "correctAnswerIndex":
-              3, "explanation": "2 + 2 equals 4 because it's basic arithmetic."
-              }, { "question": "Capital of Thailand", "options": ["Bishkek",
-              "Bangkok", "Baku", "Dushanbe"], "correctAnswerIndex": 1 }] on
-              topic</span
+              >Generate a comprehensive quiz from the uploaded content in this exact JSON format: [{ "question": "What
+              is 2 + 2?", "options": ["3", "2", "5", "4"], "correctAnswerIndex": 3, "explanation": "2 + 2 equals 4
+              because it's basic arithmetic." }, { "question": "Capital of Thailand", "options": ["Bishkek", "Bangkok",
+              "Baku", "Dushanbe"], "correctAnswerIndex": 1 }] IMPORTANT GUIDELINES: • Create 15-25 questions covering
+              ALL key concepts from the material • Include different question types: definitions, applications,
+              analysis, examples • Cover main topics, subtopics, formulas, processes, dates, names, and relationships •
+              Make options challenging but fair - include common misconceptions as wrong answers • Always provide
+              detailed explanations for learning reinforcement • Ensure questions test understanding, not just
+              memorization • Include questions of varying difficulty levels (basic, intermediate, advanced) • Focus on
+              exam-relevant content that students typically struggle with</span
             >
           </div>
         </div>
       </div>
 
+      <!-- History Page -->
+      <div id="historyPage" class="page">
+        <h2 data-translate="quizHistory">📚 Quiz History</h2>
+        <div id="historyContainer"></div>
+      </div>
+
+      <!-- Starred Page -->
+      <div id="starredPage" class="page">
+        <h2 data-translate="starredQuizzes">⭐ Starred Quizzes</h2>
+        <div id="starredContainer"></div>
+      </div>
+
       <!-- Quiz Page -->
-      <div id="quizPage" class="quiz-page">
+      <div id="quizPage" class="page">
         <div class="stats">
           <span id="questionCounter">Question 1 of 10</span>
           <span id="mistakeCounter" data-translate="mistakes">Mistakes: 0</span>
@@ -448,13 +766,7 @@
         </div>
 
         <div class="question-container">
-          <div
-            class="question-number"
-            id="questionNumber"
-            data-translate="question"
-          >
-            Question 1
-          </div>
+          <div class="question-number" id="questionNumber" data-translate="question">Question 1</div>
           <div class="question" id="questionText"></div>
 
           <div class="options" id="optionsContainer"></div>
@@ -465,13 +777,41 @@
           </div>
         </div>
 
-        <div style="text-align: center">
-          <button class="button back-btn" onclick="backToMain()">
-            ← <span data-translate="back">Back</span>
+        <div class="quiz-controls">
+          <div class="main-controls">
+            <button class="button back-btn" onclick="backToMain()">
+              <span data-translate="back">Back</span>
+            </button>
+            <button class="button next-btn" id="nextBtn" onclick="nextQuestion()">
+              <span data-translate="next">Next</span>
+            </button>
+          </div>
+          <button
+            class="star-quiz-btn"
+            id="starQuizBtn"
+            onclick="starCurrentQuiz()"
+            style="display: none"
+            title="Star this quiz"
+          >
+            ⭐
           </button>
-          <button class="button next-btn" id="nextBtn" onclick="nextQuestion()">
-            <span data-translate="next">Next</span> →
-          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Star Quiz Modal -->
+    <div id="starModal" class="modal">
+      <div class="modal-content">
+        <h3 data-translate="nameYourQuiz">Name Your Quiz</h3>
+        <input
+          type="text"
+          id="quizNameInput"
+          data-translate-placeholder="enterQuizName"
+          placeholder="Enter quiz name..."
+        />
+        <div class="modal-buttons">
+          <button class="modal-btn primary" onclick="saveStarredQuiz()" data-translate="save">Save</button>
+          <button class="modal-btn secondary" onclick="closeStarModal()" data-translate="cancel">Cancel</button>
         </div>
       </div>
     </div>
@@ -481,6 +821,11 @@
       const translations = {
         en: {
           title: "QuizForge",
+          home: "Home",
+          history: "History",
+          starred: "Starred",
+          quizHistory: "📚 Quiz History",
+          starredQuizzes: "⭐ Starred Quizzes",
           enterQuizJson: "Enter Quiz JSON:",
           jsonPlaceholder: `[{
     "question": "What is 2 + 2?",
@@ -494,9 +839,19 @@
     "correctAnswerIndex": 1
 }]`,
           createQuiz: "Create Quiz",
+          starQuiz: "⭐ Star Quiz",
+          nameYourQuiz: "Name Your Quiz",
+          enterQuizName: "Enter quiz name...",
+          save: "Save",
+          cancel: "Cancel",
+          delete: "Delete",
+          noQuizzesFound: "No quizzes found",
+          noQuizzesMessage: "Your quiz history is empty. Create some quizzes to see them here!",
+          noStarredMessage: "You haven't starred any quizzes yet. Star your favorite quizzes to see them here!",
           aiInstructionTitle: "📝 AI Instruction (Click to Copy)",
           clickToCopy: "Click to copy",
-          aiInstructionText: `Generate me quiz in json format like this:
+          aiInstructionText: `Generate a comprehensive quiz from the uploaded content in this exact JSON format:
+
 [{
     "question": "What is 2 + 2?",
     "options": ["3", "2", "5", "4"],
@@ -508,7 +863,17 @@
     "options": ["Bishkek", "Bangkok", "Baku", "Dushanbe"],
     "correctAnswerIndex": 1
 }]
-on topic`,
+
+IMPORTANT GUIDELINES:
+• Create 15-25 questions covering ALL key concepts from the material
+• Include different question types: definitions, applications, analysis, examples
+• Cover main topics, subtopics, formulas, processes, dates, names, and relationships
+• Make options challenging but fair - include common misconceptions as wrong answers  
+• Always provide detailed explanations for learning reinforcement
+• Ensure questions test understanding, not just memorization
+• Include questions of varying difficulty levels (basic, intermediate, advanced)
+• Focus on exam-relevant content that students typically struggle with
+`,
           question: "Question",
           mistakes: "Mistakes:",
           back: "Back",
@@ -524,9 +889,16 @@ on topic`,
           invalidQuestion: "Invalid question format at index",
           invalidJson: "Invalid JSON format. Please check your syntax.",
           copied: "Copied!",
+          questionsCount: "questions",
+          createdOn: "Created on",
         },
         ru: {
           title: "КвизФордж",
+          home: "Главная",
+          history: "История",
+          starred: "Избранное",
+          quizHistory: "📚 История викторин",
+          starredQuizzes: "⭐ Избранные викторины",
           enterQuizJson: "Введите JSON викторины:",
           jsonPlaceholder: `[{
     "question": "Сколько будет 2 + 2?",
@@ -540,22 +912,36 @@ on topic`,
     "correctAnswerIndex": 1
 }]`,
           createQuiz: "Создать викторину",
-          aiInstructionTitle:
-            "📝 Инструкция для ИИ (Нажмите, чтобы скопировать)",
+          starQuiz: "⭐ В избранное",
+          nameYourQuiz: "Назовите викторину",
+          enterQuizName: "Введите название викторины...",
+          save: "Сохранить",
+          cancel: "Отмена",
+          delete: "Удалить",
+          noQuizzesFound: "Викторины не найдены",
+          noQuizzesMessage: "Ваша история викторин пуста. Создайте викторины, чтобы увидеть их здесь!",
+          noStarredMessage: "У вас пока нет избранных викторин. Добавьте любимые викторины в избранное!",
+          aiInstructionTitle: "📝 Инструкция для ИИ (Нажмите, чтобы скопировать)",
           clickToCopy: "Нажмите, чтобы скопировать",
-          aiInstructionText: `Создай мне викторину в формате json вот так:
+          aiInstructionText: `Создай комплексную викторину на основе загруженного материала в точно таком JSON формате:
+
 [{
     "question": "Сколько будет 2 + 2?",
     "options": ["3", "2", "5", "4"],
     "correctAnswerIndex": 3,
     "explanation": "2 + 2 равно 4, потому что это базовая арифметика."
-},
-{
-    "question": "Столица Таиланда",
-    "options": ["Бишкек", "Бангкок", "Баку", "Душанбе"],
-    "correctAnswerIndex": 1
 }]
-на тему`,
+
+ВАЖНЫЕ УКАЗАНИЯ:
+• Создай 15-25 вопросов, охватывающих ВСЕ ключевые концепции материала
+• Включи разные типы вопросов: определения, применение, анализ, примеры
+• Охвати основные темы, подтемы, формулы, процессы, даты, имена и связи
+• Сделай варианты сложными но справедливыми - включи распространённые заблуждения как неверные ответы
+• Всегда предоставляй подробные объяснения для закрепления обучения
+• Убедись, что вопросы проверяют понимание, а не только запоминание
+• Включи вопросы разного уровня сложности (базовый, средний, продвинутый)
+• Сосредоточься на экзаменационном контенте, с которым студенты обычно испытывают трудности
+`,
           question: "Вопрос",
           mistakes: "Ошибки:",
           back: "Назад",
@@ -571,9 +957,16 @@ on topic`,
           invalidQuestion: "Неверный формат вопроса в индексе",
           invalidJson: "Неверный формат JSON. Проверьте синтаксис.",
           copied: "Скопировано!",
+          questionsCount: "вопросов",
+          createdOn: "Создано",
         },
         ky: {
           title: "КвизФордж",
+          home: "Башкы бет",
+          history: "Тарых",
+          starred: "Тандалган",
+          quizHistory: "📚 Викторина тарыхы",
+          starredQuizzes: "⭐ Тандалган викториналар",
           enterQuizJson: "Викторинанын JSON маалыматын киргизиңиз:",
           jsonPlaceholder: `[{
     "question": "2 + 2 канча болот?",
@@ -587,21 +980,36 @@ on topic`,
     "correctAnswerIndex": 1
 }]`,
           createQuiz: "Викторина түзүү",
+          starQuiz: "⭐ Тандоо",
+          nameYourQuiz: "Викторинаңызды атаңыз",
+          enterQuizName: "Викторинанын атын киргизиңиз...",
+          save: "Сактоо",
+          cancel: "Жокко чыгаруу",
+          delete: "Өчүрүү",
+          noQuizzesFound: "Викториналар табылган жок",
+          noQuizzesMessage: "Викторина тарыхыңыз бош. Викториналарды көрүү үчүн түзүп көрүңүз!",
+          noStarredMessage: "Али эч кандай викторинаны тандаган жоксуз. Сүйүктүү викториналарыңызды тандаңыз!",
           aiInstructionTitle: "📝 AI үчүн көрсөтмө (Көчүрүү үчүн басыңыз)",
           clickToCopy: "Көчүрүү үчүн басыңыз",
-          aiInstructionText: `Мага ушундай json форматында викторина түзүп бериңиз:
+          aiInstructionText: `Жүктөлгөн материалдын негизинде кеңири викторина түзүңүз, так ушундай JSON форматында:
+
 [{
     "question": "2 + 2 канча болот?",
     "options": ["3", "2", "5", "4"],
     "correctAnswerIndex": 3,
     "explanation": "2 + 2 = 4, анткени бул негизги арифметика."
-},
-{
-    "question": "Тайланддын борбору",
-    "options": ["Бишкек", "Бангкок", "Баку", "Душанбе"],
-    "correctAnswerIndex": 1
 }]
-тема: `,
+
+МААНИЛҮҮ КӨРСӨТМӨЛӨР:
+• Материалдын БАРДЫК негизги концепцияларын камтыган 15-25 суроо түзүңүз
+• Ар түрдүү суроо түрлөрүн кошуңуз: аныктамалар, колдонуу, талдоо, мисалдар
+• Негизги темаларды, кичи темаларды, формулаларды, процесстерди, датоларды, аттарды жана байланыштарды камтыңыз
+• Варианттарды кыйын бирок адилетүү кылыңыз - кеңири таралган жаңылыштуулуктарды туура эмес жооптар катары кошуңуз
+• Үйрөнүүнү бекемдөө үчүн дайыма кеңири түшүндүрмөлөрдү бериңиз
+• Суроолор жаттоону эмес, түшүнүүнү текшеришин камсыздаңыз
+• Ар түрдүү кыйынчылык деңгээлиндеги суроолорду кошуңуз (негизги, орто, алдыңкы)
+• Студенттер адатта кыйналган экзамендик мазмунга көңүл буруңуз
+`,
           question: "Суроо",
           mistakes: "Каталар:",
           back: "Артка",
@@ -617,6 +1025,8 @@ on topic`,
           invalidQuestion: "Суроонун форматы туура эмес",
           invalidJson: "JSON форматы туура эмес. Синтаксисти текшериңиз.",
           copied: "Көчүрүлдү!",
+          questionsCount: "суроо",
+          createdOn: "Түзүлдү",
         },
       };
 
@@ -627,14 +1037,313 @@ on topic`,
       let totalMistakes = 0;
       let selectedOption = null;
       let isAnswered = false;
+      let currentQuizId = null;
+      let currentPage = "main";
+
+      // LocalStorage keys
+      const QUIZ_HISTORY_KEY = "quizforge_history";
+      const STARRED_QUIZZES_KEY = "quizforge_starred";
+
+      // Utility functions for localStorage
+      function getQuizHistory() {
+        const history = localStorage.getItem(QUIZ_HISTORY_KEY);
+        return history ? JSON.parse(history) : [];
+      }
+
+      function saveQuizToHistory(quizData, quizId = null) {
+        const history = getQuizHistory();
+        const quiz = {
+          id: quizId || Date.now().toString(),
+          data: quizData,
+          createdAt: new Date().toISOString(),
+          preview: generateQuizPreview(quizData),
+        };
+
+        // Remove duplicate if exists
+        const existingIndex = history.findIndex((q) => q.id === quiz.id);
+        if (existingIndex >= 0) {
+          history.splice(existingIndex, 1);
+        }
+
+        history.unshift(quiz);
+
+        // Keep only last 50 quizzes
+        if (history.length > 50) {
+          history.splice(50);
+        }
+
+        localStorage.setItem(QUIZ_HISTORY_KEY, JSON.stringify(history));
+        return quiz.id;
+      }
+
+      function getStarredQuizzes() {
+        const starred = localStorage.getItem(STARRED_QUIZZES_KEY);
+        return starred ? JSON.parse(starred) : [];
+      }
+
+      function saveStarredQuizToStorage(name, quizData, quizId) {
+        const starred = getStarredQuizzes();
+        const quiz = {
+          id: quizId || Date.now().toString(),
+          name: name,
+          data: quizData,
+          createdAt: new Date().toISOString(),
+          preview: generateQuizPreview(quizData),
+        };
+
+        // Remove duplicate if exists
+        const existingIndex = starred.findIndex((q) => q.id === quiz.id);
+        if (existingIndex >= 0) {
+          starred.splice(existingIndex, 1);
+        }
+
+        starred.unshift(quiz);
+        localStorage.setItem(STARRED_QUIZZES_KEY, JSON.stringify(starred));
+        return quiz.id;
+      }
+
+      function removeStarredQuiz(quizId) {
+        const starred = getStarredQuizzes();
+        const filtered = starred.filter((q) => q.id !== quizId);
+        localStorage.setItem(STARRED_QUIZZES_KEY, JSON.stringify(filtered));
+      }
+
+      function removeQuizFromHistory(quizId) {
+        const history = getQuizHistory();
+        const filtered = history.filter((q) => q.id !== quizId);
+        localStorage.setItem(QUIZ_HISTORY_KEY, JSON.stringify(filtered));
+      }
+
+      function generateQuizPreview(quizData) {
+        if (!quizData || !Array.isArray(quizData) || quizData.length === 0) {
+          return "Empty quiz";
+        }
+
+        const firstQuestion = quizData[0];
+        const preview = firstQuestion.question || "No question";
+        return preview.length > 80 ? preview.substring(0, 80) + "..." : preview;
+      }
+
+      function showPage(page) {
+        currentPage = page;
+
+        // Update navigation - find the correct nav button
+        document.querySelectorAll(".nav-btn").forEach((btn) => {
+          btn.classList.remove("active");
+          if (
+            (page === "main" && btn.textContent.includes(translations[currentLanguage].home)) ||
+            (page === "history" && btn.textContent.includes(translations[currentLanguage].history)) ||
+            (page === "starred" && btn.textContent.includes(translations[currentLanguage].starred))
+          ) {
+            btn.classList.add("active");
+          }
+        });
+
+        // Hide all pages
+        document.querySelectorAll(".page").forEach((p) => p.classList.remove("active"));
+
+        // Show selected page
+        switch (page) {
+          case "main":
+            document.getElementById("mainPage").classList.add("active");
+            break;
+          case "history":
+            document.getElementById("historyPage").classList.add("active");
+            loadHistoryPage();
+            break;
+          case "starred":
+            document.getElementById("starredPage").classList.add("active");
+            loadStarredPage();
+            break;
+          case "quiz":
+            document.getElementById("quizPage").classList.add("active");
+            break;
+        }
+      }
+
+      function loadHistoryPage() {
+        const history = getQuizHistory();
+        const container = document.getElementById("historyContainer");
+
+        if (history.length === 0) {
+          container.innerHTML = `
+            <div class="empty-state">
+              <div class="empty-state-icon">📚</div>
+              <h3>${translations[currentLanguage].noQuizzesFound}</h3>
+              <p>${translations[currentLanguage].noQuizzesMessage}</p>
+            </div>
+          `;
+          return;
+        }
+
+        container.innerHTML = history
+          .map(
+            (quiz) => `
+          <div class="quiz-item" onclick="startQuizFromHistory('${quiz.id}')">
+            <div class="quiz-preview">${quiz.preview}</div>
+            <div class="quiz-meta">
+              <span>${quiz.data.length} ${translations[currentLanguage].questionsCount} • ${
+              translations[currentLanguage].createdOn
+            } ${new Date(quiz.createdAt).toLocaleDateString()}</span>
+              <div class="quiz-actions">
+                <button class="star-btn-inline ${
+                  isQuizStarred(quiz.id) ? "starred" : ""
+                }" onclick="event.stopPropagation(); toggleStar('${quiz.id}', true)">
+                  ${isQuizStarred(quiz.id) ? "★" : "☆"}
+                </button>
+                <button class="delete-btn" onclick="event.stopPropagation(); deleteFromHistory('${quiz.id}')">${
+              translations[currentLanguage].delete
+            }</button>
+              </div>
+            </div>
+          </div>
+        `
+          )
+          .join("");
+      }
+
+      function loadStarredPage() {
+        const starred = getStarredQuizzes();
+        const container = document.getElementById("starredContainer");
+
+        if (starred.length === 0) {
+          container.innerHTML = `
+            <div class="empty-state">
+              <div class="empty-state-icon">⭐</div>
+              <h3>${translations[currentLanguage].noQuizzesFound}</h3>
+              <p>${translations[currentLanguage].noStarredMessage}</p>
+            </div>
+          `;
+          return;
+        }
+
+        container.innerHTML = starred
+          .map(
+            (quiz) => `
+          <div class="quiz-item" onclick="startQuizFromHistory('${quiz.id}', true)">
+            <div class="quiz-name">${quiz.name}</div>
+            <div class="quiz-preview">${quiz.preview}</div>
+            <div class="quiz-meta">
+              <span>${quiz.data.length} ${translations[currentLanguage].questionsCount} • ${
+              translations[currentLanguage].createdOn
+            } ${new Date(quiz.createdAt).toLocaleDateString()}</span>
+              <div class="quiz-actions">
+                <button class="star-btn-inline starred" onclick="event.stopPropagation(); removeFromStarred('${
+                  quiz.id
+                }')">★</button>
+                <button class="delete-btn" onclick="event.stopPropagation(); removeFromStarred('${quiz.id}')">${
+              translations[currentLanguage].delete
+            }</button>
+              </div>
+            </div>
+          </div>
+        `
+          )
+          .join("");
+      }
+
+      function isQuizStarred(quizId) {
+        const starred = getStarredQuizzes();
+        return starred.some((q) => q.id === quizId);
+      }
+
+      function toggleStar(quizId, fromHistory = false) {
+        if (isQuizStarred(quizId)) {
+          removeStarredQuiz(quizId);
+        } else {
+          // Find the quiz data
+          let quiz = null;
+          if (fromHistory) {
+            const history = getQuizHistory();
+            quiz = history.find((q) => q.id === quizId);
+          }
+
+          if (quiz) {
+            // Show modal to get name
+            currentQuizId = quizId;
+            document.getElementById("starModal").style.display = "block";
+            document.getElementById("quizNameInput").value = "";
+            document.getElementById("quizNameInput").focus();
+          }
+        }
+
+        // Refresh current page
+        if (currentPage === "history") {
+          loadHistoryPage();
+        } else if (currentPage === "starred") {
+          loadStarredPage();
+        }
+      }
+
+      function startQuizFromHistory(quizId, fromStarred = false) {
+        let quiz = null;
+
+        if (fromStarred) {
+          const starred = getStarredQuizzes();
+          quiz = starred.find((q) => q.id === quizId);
+        } else {
+          const history = getQuizHistory();
+          quiz = history.find((q) => q.id === quizId);
+        }
+
+        if (quiz && quiz.data) {
+          quizData = quiz.data;
+          currentQuestionIndex = 0;
+          mistakeQuestions = [];
+          totalMistakes = 0;
+          currentQuizId = quizId;
+          showPage("quiz");
+          displayQuestion();
+        }
+      }
+
+      function deleteFromHistory(quizId) {
+        if (confirm("Are you sure you want to delete this quiz from history?")) {
+          removeQuizFromHistory(quizId);
+          loadHistoryPage();
+        }
+      }
+
+      function removeFromStarred(quizId) {
+        if (confirm("Are you sure you want to remove this quiz from starred?")) {
+          removeStarredQuiz(quizId);
+          loadStarredPage();
+        }
+      }
+
+      function starCurrentQuiz() {
+        if (quizData && quizData.length > 0) {
+          currentQuizId = currentQuizId || Date.now().toString();
+          document.getElementById("starModal").style.display = "block";
+          document.getElementById("quizNameInput").value = "";
+          document.getElementById("quizNameInput").focus();
+        }
+      }
+
+      function saveStarredQuiz() {
+        const name = document.getElementById("quizNameInput").value.trim();
+        if (!name) {
+          alert("Please enter a quiz name");
+          return;
+        }
+
+        if (quizData && currentQuizId) {
+          saveStarredQuizToStorage(name, quizData, currentQuizId);
+          closeStarModal();
+          alert("Quiz saved to starred!");
+        }
+      }
+
+      function closeStarModal() {
+        document.getElementById("starModal").style.display = "none";
+        document.getElementById("quizNameInput").value = "";
+      }
 
       function switchLanguage(lang) {
         currentLanguage = lang;
 
         // Update active button
-        document
-          .querySelectorAll(".lang-btn")
-          .forEach((btn) => btn.classList.remove("active"));
+        document.querySelectorAll(".lang-btn").forEach((btn) => btn.classList.remove("active"));
         event.target.classList.add("active");
 
         // Update all translatable elements
@@ -651,19 +1360,29 @@ on topic`,
           textarea.placeholder = translations[lang].jsonPlaceholder;
         }
 
+        // Update quiz name input placeholder
+        const quizNameInput = document.getElementById("quizNameInput");
+        if (quizNameInput && translations[lang].enterQuizName) {
+          quizNameInput.placeholder = translations[lang].enterQuizName;
+        }
+
         // Update AI instruction text content
-        const aiInstructionSpan = document.querySelector(
-          '#aiInstruction span[data-translate="aiInstructionText"]'
-        );
+        const aiInstructionSpan = document.querySelector('#aiInstruction span[data-translate="aiInstructionText"]');
         if (aiInstructionSpan && translations[lang].aiInstructionText) {
           aiInstructionSpan.textContent = translations[lang].aiInstructionText;
+        }
+
+        // Refresh current page to update content
+        if (currentPage === "history") {
+          loadHistoryPage();
+        } else if (currentPage === "starred") {
+          loadStarredPage();
         }
       }
 
       function showError(messageKey) {
         const errorDiv = document.getElementById("errorMessage");
-        errorDiv.textContent =
-          translations[currentLanguage][messageKey] || messageKey;
+        errorDiv.textContent = translations[currentLanguage][messageKey] || messageKey;
         errorDiv.style.display = "block";
         setTimeout(() => {
           errorDiv.style.display = "none";
@@ -706,6 +1425,10 @@ on topic`,
           currentQuestionIndex = 0;
           mistakeQuestions = [];
           totalMistakes = 0;
+
+          // Save to history and get ID
+          currentQuizId = saveQuizToHistory(data);
+
           startQuiz();
         } catch (error) {
           showError("invalidJson");
@@ -713,8 +1436,7 @@ on topic`,
       }
 
       function startQuiz() {
-        document.getElementById("mainPage").style.display = "none";
-        document.getElementById("quizPage").style.display = "block";
+        showPage("quiz");
         displayQuestion();
       }
 
@@ -760,9 +1482,10 @@ on topic`,
           optionsContainer.appendChild(optionDiv);
         });
 
-        // Hide feedback and next button
+        // Hide feedback and next button, show star button
         document.getElementById("feedback").style.display = "none";
         document.getElementById("nextBtn").style.display = "none";
+        document.getElementById("starQuizBtn").style.display = "inline-block";
       }
 
       function selectOption(index) {
@@ -794,11 +1517,7 @@ on topic`,
           feedback.className = "feedback incorrect";
 
           // Add to mistake questions if not already there
-          if (
-            !mistakeQuestions.some(
-              (q) => q.originalIndex === currentQuestionIndex
-            )
-          ) {
+          if (!mistakeQuestions.some((q) => q.originalIndex === currentQuestionIndex)) {
             mistakeQuestions.push({
               ...question,
               originalIndex: currentQuestionIndex,
@@ -852,11 +1571,10 @@ on topic`,
       }
 
       function backToMain() {
-        document.getElementById("mainPage").style.display = "block";
-        document.getElementById("quizPage").style.display = "none";
-
+        showPage("main");
         // Reset quiz page content in case it was modified
-        document.getElementById("quizPage").innerHTML = `
+        const quizPage = document.getElementById("quizPage");
+        quizPage.innerHTML = `
                 <div class="stats">
                     <span id="questionCounter">Question 1 of 10</span>
                     <span id="mistakeCounter" data-translate="mistakes">${translations[currentLanguage].mistakes} 0</span>
@@ -878,17 +1596,18 @@ on topic`,
                     </div>
                 </div>
                 
-                <div style="text-align: center;">
-                    <button class="button back-btn" onclick="backToMain()">← <span data-translate="back">${translations[currentLanguage].back}</span></button>
-                    <button class="button next-btn" id="nextBtn" onclick="nextQuestion()"><span data-translate="next">${translations[currentLanguage].next}</span> →</button>
+                <div class="quiz-controls">
+                    <div class="main-controls">
+                        <button class="button back-btn" onclick="backToMain()"><span data-translate="back">${translations[currentLanguage].back}</span></button>
+                        <button class="button next-btn" id="nextBtn" onclick="nextQuestion()"><span data-translate="next">${translations[currentLanguage].next}</span></button>
+                    </div>
+                    <button class="star-quiz-btn" id="starQuizBtn" onclick="starCurrentQuiz()" style="display: none;" title="Star this quiz">⭐</button>
                 </div>
             `;
       }
 
       function copyToClipboard() {
-        const aiInstructionSpan = document.querySelector(
-          '#aiInstruction span[data-translate="aiInstructionText"]'
-        );
+        const aiInstructionSpan = document.querySelector('#aiInstruction span[data-translate="aiInstructionText"]');
         const text = aiInstructionSpan
           ? aiInstructionSpan.textContent
           : translations[currentLanguage].aiInstructionText;
@@ -924,6 +1643,21 @@ on topic`,
       // Initialize with default language
       document.addEventListener("DOMContentLoaded", function () {
         switchLanguage("en");
+        showPage("main");
+
+        // Close modal when clicking outside
+        document.getElementById("starModal").addEventListener("click", function (e) {
+          if (e.target === this) {
+            closeStarModal();
+          }
+        });
+
+        // Handle Enter key in modal input
+        document.getElementById("quizNameInput").addEventListener("keypress", function (e) {
+          if (e.key === "Enter") {
+            saveStarredQuiz();
+          }
+        });
       });
     </script>
   </body>
