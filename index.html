@@ -1043,6 +1043,16 @@ IMPORTANT GUIDELINES:
       // LocalStorage keys
       const QUIZ_HISTORY_KEY = "quizforge_history";
       const STARRED_QUIZZES_KEY = "quizforge_starred";
+      const LANGUAGE_PREFERENCE_KEY = "quizforge_language";
+
+      // Language preference functions
+      function saveLanguagePreference(lang) {
+        localStorage.setItem(LANGUAGE_PREFERENCE_KEY, lang);
+      }
+
+      function getLanguagePreference() {
+        return localStorage.getItem(LANGUAGE_PREFERENCE_KEY) || "en";
+      }
 
       // Utility functions for localStorage
       function getQuizHistory() {
@@ -1339,8 +1349,50 @@ IMPORTANT GUIDELINES:
         document.getElementById("quizNameInput").value = "";
       }
 
+      function initializeLanguage() {
+        const savedLanguage = getLanguagePreference();
+        currentLanguage = savedLanguage;
+
+        // Update active button without triggering event
+        document.querySelectorAll(".lang-btn").forEach((btn) => {
+          btn.classList.remove("active");
+          if (btn.textContent.toLowerCase() === savedLanguage.toLowerCase()) {
+            btn.classList.add("active");
+          }
+        });
+
+        // Apply translations
+        document.querySelectorAll("[data-translate]").forEach((element) => {
+          const key = element.getAttribute("data-translate");
+          if (translations[savedLanguage][key]) {
+            element.textContent = translations[savedLanguage][key];
+          }
+        });
+
+        // Update placeholder
+        const textarea = document.getElementById("jsonInput");
+        if (translations[savedLanguage].jsonPlaceholder) {
+          textarea.placeholder = translations[savedLanguage].jsonPlaceholder;
+        }
+
+        // Update quiz name input placeholder
+        const quizNameInput = document.getElementById("quizNameInput");
+        if (quizNameInput && translations[savedLanguage].enterQuizName) {
+          quizNameInput.placeholder = translations[savedLanguage].enterQuizName;
+        }
+
+        // Update AI instruction text content
+        const aiInstructionSpan = document.querySelector('#aiInstruction span[data-translate="aiInstructionText"]');
+        if (aiInstructionSpan && translations[savedLanguage].aiInstructionText) {
+          aiInstructionSpan.textContent = translations[savedLanguage].aiInstructionText;
+        }
+      }
+
       function switchLanguage(lang) {
         currentLanguage = lang;
+
+        // Save language preference to localStorage
+        saveLanguagePreference(lang);
 
         // Update active button
         document.querySelectorAll(".lang-btn").forEach((btn) => btn.classList.remove("active"));
@@ -1640,9 +1692,9 @@ IMPORTANT GUIDELINES:
         }, 2000);
       }
 
-      // Initialize with default language
+      // Initialize with saved language preference
       document.addEventListener("DOMContentLoaded", function () {
-        switchLanguage("en");
+        initializeLanguage();
         showPage("main");
 
         // Close modal when clicking outside
