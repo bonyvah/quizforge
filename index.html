@@ -1126,7 +1126,7 @@ IMPORTANT GUIDELINES:
 • Use question starters: "Explain...", "Describe...", "Compare...", "Analyze...", "How does..."
 • Provide comprehensive model answers in "correctAnswer" field
 • Include "type": "written" for each question
-• Add explanations with additional context or key points (optional)
+• No need for "explanation" field
 • Test deep understanding, critical thinking, and application
 • Focus on concepts that require elaboration, not simple facts
 `,
@@ -1151,7 +1151,7 @@ IMPORTANT GUIDELINES:
 • Use written answer for: explanations, analysis, processes, applications, critical thinking
 • Multiple choice: 4 options, include "correctAnswerIndex"
 • Written answer: include "type": "written" and "correctAnswer" fields
-• Both types should have detailed "explanation" fields (optional)
+• Only multiple choice needs "explanation" field (optional but recommended)
 • Balance quantity: roughly 60% multiple choice, 40% written
 • Vary difficulty levels across both question types
 • Cover all key concepts comprehensively
@@ -1252,7 +1252,7 @@ IMPORTANT GUIDELINES:
 • Используй начала: "Объясните...", "Опишите...", "Сравните...", "Проанализируйте..."
 • Предоставь исчерпывающие образцовые ответы в поле "correctAnswer"
 • Включи "type": "written" для каждого вопроса
-• Добавь объяснения с дополнительным контекстом (по желанию)
+• Поле "explanation" не требуется
 • Тестируй глубокое понимание и критическое мышление
 • Фокус на концепциях требующих развёрнутого ответа
 `,
@@ -1277,7 +1277,7 @@ IMPORTANT GUIDELINES:
 • Письменные ответы для: объяснений, анализа, процессов, применения
 • Множественный выбор: 4 варианта, "correctAnswerIndex"
 • Письменные: "type": "written" и "correctAnswer"
-• Оба типа должны иметь подробные "explanation" (желательно)
+• Только для множественного выбора нужно "explanation" (опционально)
 • Баланс: примерно 60% множественный выбор, 40% письменные
 • Разные уровни сложности в обоих типах
 • Охватывай все ключевые концепции
@@ -1378,7 +1378,7 @@ IMPORTANT GUIDELINES:
 • Башталыштарды колдонуңуз: "Түшүндүрүңүз...", "Сүрөттөңүз...", "Салыштырыңыз..."
 • "correctAnswer" талаасында толук үлгү жоопторду бериңиз
 • Ар бир суроого "type": "written" кошуңуз
-• Кошумча контекст менен түшүндүрмөлөрдү кошуңуз (милдеттүү эмес)
+• "explanation" талаасы керек эмес
 • Терең түшүнүүнү жана сынчыл ойлонууну текшериңиз
 • Кеңири жоопторду талап кылган концепциялар
 `,
@@ -1403,7 +1403,7 @@ IMPORTANT GUIDELINES:
 • Жазуу жооптор: түшүндүрмөлөр, талдоо, процесстер, колдонуу үчүн
 • Көп тандоо: 4 вариант, "correctAnswerIndex"
 • Жазуу: "type": "written" жана "correctAnswer"
-• Эки түр да кеңири "explanation" болушу керек (милдеттүү эмес)
+• Көп тандоо үчүн гана "explanation" керек (милдеттүү эмес)
 • Баланс: болжол менен 60% көп тандоо, 40% жазуу
 • Эки түрдө да ар түрдүү кыйынчылык деңгээлдери
 • Бардык негизги концепцияларды камтыңыз
@@ -2063,17 +2063,6 @@ IMPORTANT GUIDELINES:
         document.getElementById("correctAnswerText").textContent =
           question.correctAnswer || "No model answer provided.";
         document.getElementById("correctAnswerDisplay").style.display = "block";
-
-        // Show explanation if available
-        const explanation = document.getElementById("explanation");
-        const feedback = document.getElementById("feedback");
-        if (question.explanation) {
-          explanation.textContent = question.explanation;
-          explanation.style.display = "block";
-          feedback.style.display = "block";
-          feedback.className = "feedback";
-          document.getElementById("feedbackText").textContent = "";
-        }
 
         // Show self-grade buttons
         document.getElementById("selfGradeButtons").style.display = "flex";
