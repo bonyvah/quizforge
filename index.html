@@ -1464,9 +1464,9 @@ Mix both types as needed.
 
       let pendingPage = null;
 
-      function showPage(page) {
+      function showPage(page, skipConfirmation = false) {
         // Check if we're currently on quiz page and trying to leave
-        if (currentPage === "quiz" && page !== "quiz" && quizData.length > 0) {
+        if (!skipConfirmation && currentPage === "quiz" && page !== "quiz" && quizData.length > 0) {
           pendingPage = page;
           document.getElementById("leaveQuizModal").style.display = "flex";
           return;
@@ -2110,7 +2110,7 @@ Mix both types as needed.
       }
 
       function backToMain() {
-        showPage("main");
+        showPage("main", true);
         // Reset quiz page content in case it was modified
         const quizPage = document.getElementById("quizPage");
         quizPage.innerHTML = `
@@ -2128,6 +2128,30 @@ Mix both types as needed.
                     <div class="question" id="questionText"></div>
                     
                     <div class="options" id="optionsContainer"></div>
+                    
+                    <div class="written-answer-container" id="writtenAnswerContainer" style="display: none">
+                        <textarea
+                            id="userAnswerInput"
+                            class="answer-textarea"
+                            placeholder="Type your answer here..."
+                            data-translate-placeholder="typeYourAnswer"
+                        ></textarea>
+                        <button class="submit-answer-btn" id="submitAnswerBtn" onclick="submitWrittenAnswer()">
+                            <span data-translate="submitAnswer">Submit Answer</span>
+                        </button>
+                        <div class="correct-answer-display" id="correctAnswerDisplay">
+                            <h4 data-translate="correctAnswerLabel">Correct Answer:</h4>
+                            <p id="correctAnswerText"></p>
+                        </div>
+                        <div class="self-grade-buttons" id="selfGradeButtons">
+                            <button class="self-grade-btn correct" onclick="selfGrade(true)">
+                                <span data-translate="markCorrect">✓ I Got It Right</span>
+                            </button>
+                            <button class="self-grade-btn incorrect" onclick="selfGrade(false)">
+                                <span data-translate="markIncorrect">✗ I Got It Wrong</span>
+                            </button>
+                        </div>
+                    </div>
                     
                     <div class="feedback" id="feedback">
                         <div id="feedbackText"></div>
