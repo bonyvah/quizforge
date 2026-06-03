@@ -996,7 +996,6 @@
           </div>
 
           <div class="feedback" id="feedback">
-            <div id="feedbackText"></div>
             <div class="explanation" id="explanation"></div>
           </div>
         </div>
@@ -1135,8 +1134,6 @@ Mix both types as needed.
           mistakes: "Mistakes:",
           back: "Back",
           next: "Next",
-          correct: "🎉 Correct!",
-          incorrect: "❌ Incorrect!",
           quizCompleted: "🎊 Quiz Completed!",
           greatJob: "Great job! You've answered all questions correctly.",
           totalMistakes: "Total mistakes made:",
@@ -1236,8 +1233,6 @@ Mix both types as needed.
           mistakes: "Ошибки:",
           back: "Назад",
           next: "Далее",
-          correct: "🎉 Правильно!",
-          incorrect: "❌ Неправильно!",
           quizCompleted: "🎊 Викторина завершена!",
           greatJob: "Отлично! Вы правильно ответили на все вопросы.",
           totalMistakes: "Всего ошибок:",
@@ -1337,8 +1332,6 @@ Mix both types as needed.
           mistakes: "Каталар:",
           back: "Артка",
           next: "Кийинки",
-          correct: "🎉 Туура!",
-          incorrect: "❌ Туура эмес!",
           quizCompleted: "🎊 Викторина аяктады!",
           greatJob: "Сонун! Сиз бардык суроолорго туура жооп бердиңиз.",
           totalMistakes: "Жалпы каталар:",
@@ -1996,13 +1989,10 @@ Mix both types as needed.
       function selfGrade(isCorrect) {
         const question = quizData[currentQuestionIndex];
         const feedback = document.getElementById("feedback");
-        const feedbackText = document.getElementById("feedbackText");
 
         if (isCorrect) {
-          feedbackText.textContent = translations[currentLanguage].correct;
           feedback.className = "feedback correct";
         } else {
-          feedbackText.textContent = translations[currentLanguage].incorrect;
           feedback.className = "feedback incorrect";
 
           // Add to mistake questions if not already there
@@ -2015,7 +2005,6 @@ Mix both types as needed.
           totalMistakes++;
         }
 
-        feedback.style.display = "block";
         document.getElementById(
           "mistakeCounter"
         ).textContent = `${translations[currentLanguage].mistakes} ${totalMistakes}`;
@@ -2036,7 +2025,6 @@ Mix both types as needed.
         const question = quizData[currentQuestionIndex];
         const options = document.querySelectorAll(".option");
         const feedback = document.getElementById("feedback");
-        const feedbackText = document.getElementById("feedbackText");
         const explanation = document.getElementById("explanation");
 
         // Disable all options
@@ -2047,12 +2035,10 @@ Mix both types as needed.
 
         if (index === question.correctAnswerIndex) {
           // Correct answer
-          feedbackText.textContent = translations[currentLanguage].correct;
           feedback.className = "feedback correct";
         } else {
           // Wrong answer
           options[index].classList.add("incorrect");
-          feedbackText.textContent = translations[currentLanguage].incorrect;
           feedback.className = "feedback incorrect";
 
           // Add to mistake questions if not already there
@@ -2069,11 +2055,12 @@ Mix both types as needed.
         if (question.explanation) {
           explanation.textContent = question.explanation;
           explanation.style.display = "block";
+          feedback.style.display = "block";
         } else {
           explanation.style.display = "none";
+          feedback.style.display = "none";
         }
 
-        feedback.style.display = "block";
         document.getElementById("nextBtn").style.display = "inline-block";
       }
 
